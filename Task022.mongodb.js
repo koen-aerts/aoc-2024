@@ -10,32 +10,30 @@ const re = /[^0-9]/g;
 db.getCollection("games").find({}).forEach((game) => {
   const gameId = parseInt(game.Field_0.replace(re, ""));
   const sets = game.Field_1.split(";");
-  let isPossible = true;
+  let maxRed = 0;
+  let maxGreen = 0;
+  let maxBlue = 0;
   for (const set of sets) {
     const colours = set.split(",");
     for (const colour of colours) {
       const amount = parseInt(colour.replace(re, ""));
       if (colour.indexOf("red") >= 0) {
-        if (amount > 12) {
-          isPossible = false;
-          break;
+        if (amount > maxRed) {
+          maxRed = amount;
         }
       } else if (colour.indexOf("green") >= 0) {
-        if (amount > 13) {
-          isPossible = false;
-          break;
+        if (amount > maxGreen) {
+          maxGreen = amount;
         }
       } else if (colour.indexOf("blue") >= 0) {
-        if (amount > 14) {
-          isPossible = false;
-          break;
+        if (amount > maxBlue) {
+          maxBlue = amount;
         }
       }
     }
   }
-  print(game.Field_0 + ": " + isPossible)
-  if (isPossible) {
-    tot += gameId;
-  }
+  const power = maxRed * maxGreen * maxBlue;
+  print(game.Field_0 + ": " + power)
+  tot += power;
 })
 print("Sum: " + tot);
