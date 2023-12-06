@@ -3,7 +3,7 @@ returns bigint
 language plpgsql    
 as $$
 declare
-    tot_wins integer;
+    tot_wins bigint;
     win bigint;
     ms bigint;
     dist bigint;
