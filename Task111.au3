@@ -4,19 +4,12 @@
 
 
 Func Task111()
-        ;ConsoleWrite("HI")
-
-        ; Open the file for reading and store the handle to a variable.
         Local $hFileOpen = FileOpen("map.txt", $FO_READ)
         If $hFileOpen = -1 Then
-                MsgBox($MB_SYSTEMMODAL, "", "An error occurred when reading the file.")
-                Return False
+            ConsoleWrite("An error occurred when reading the file.")
+            Return False
         EndIf
-
-        ; Read the contents of the file using the handle returned by FileOpen.
         Local $sFileRead = FileRead($hFileOpen)
-
-        ; Close the handle returned by FileOpen.
         FileClose($hFileOpen)
 
         Dim $lines = StringSplit($sFileRead, @CRLF, $STR_ENTIRESPLIT)
@@ -85,21 +78,20 @@ Func Task111()
             For $x1 = 0 To $newWidth-1
                 If $gal[$y1][$x1] = "#" Then
                     For $y2 = $y1 To $newHeight-1
-					    For $x2 = 0 To $newWidth-1
+                        For $x2 = 0 To $newWidth-1
                             If $gal[$y2][$x2] = "#" and (($y2 > $y1) or ($x2 > $x1)) Then
-							    $pSize = Abs($y2 - $y1) + Abs($x2 - $x1)
+                                $pSize = Abs($y2 - $y1) + Abs($x2 - $x1)
                                 ;ConsoleWrite("  Size: " & $pSize & @CRLF)
                                 $paths[$currentPath] = $pSize
-								$totSum = $totSum + $pSize
+                                $totSum = $totSum + $pSize
                                 $currentPath = $currentPath + 1
                             EndIf
                         Next
                     Next
                 EndIf
             Next
-		Next
+        Next
         ConsoleWrite("Sum: " & $totSum & @CRLF)
-
-EndFunc   ;==>Example
+EndFunc
 
 Task111()
